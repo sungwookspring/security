@@ -42,3 +42,4 @@ protected void configure(HttpSecurity http) throws Exception {
 
 # 참고자료
 * [1] data.sql, schema.sql: https://www.baeldung.com/spring-boot-data-sql-and-schema-sql
+* [2] 강의영상: https://www.youtube.com/watch?v=her_7pa0vrg
