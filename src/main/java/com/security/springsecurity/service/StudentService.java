@@ -36,4 +36,15 @@ public class StudentService {
 
         return dtos;
     }
+
+    public StudentResponseAllDto findByIdToDto(Long student_id){
+        Student findStudent = studentRepository.findById(student_id)
+                .orElseThrow(
+                        () -> new IllegalStateException("존재하지 않은 student_id")
+                );
+
+        return StudentResponseAllDto.builder()
+                .name(findStudent.getName())
+                .build();
+    }
 }
