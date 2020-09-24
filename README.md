@@ -10,5 +10,18 @@
 * 계정과 비밀번호는 base64인코딩을 하여 헤더에 포함시켜 서버에 전달
 ![](imgs/header_security.png)
 
+# 인증없이 특정 페이지 접근 허용
+* authorizeRequests().anyMatchers().permitAll()
+```java
+@Override
+protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                    .antMatchers("/", "/index", "/css/*", "/js/*").permitAll()
+
+    ...
+}
+```
+
 # 참고자료
 * [1] data.sql, schema.sql: https://www.baeldung.com/spring-boot-data-sql-and-schema-sql
