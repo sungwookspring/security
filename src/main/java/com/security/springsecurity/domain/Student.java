@@ -7,9 +7,10 @@ import javax.persistence.*;
 @Entity
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "mystudent")
 public class Student {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "student_id")
     private Long id;
 
