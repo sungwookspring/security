@@ -23,5 +23,22 @@ protected void configure(HttpSecurity http) throws Exception {
 }
 ```
 
+# Role and Permission
+* Enum으로 Role과 Permission을 생성
+* Role에 Permission을 적용
+
+# Role 적용
+```java
+* hasRole 메소드 사용
+@Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                    .antMatchers("/", "/index", "/css/*", "/js/*").permitAll()
+                    .antMatchers("/api/**").hasRole(STUDENT.name())
+    ...
+}
+```
+
 # 참고자료
 * [1] data.sql, schema.sql: https://www.baeldung.com/spring-boot-data-sql-and-schema-sql
