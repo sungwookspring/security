@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/management/api/v1/students")
 @Slf4j
 public class StudentManagement_Controller {
     private final StudentService studentService;
 
-    @PostMapping("/api/v1/student/add/{name}")
+    @PostMapping(path = "{name}")
     public Long save(@PathVariable("name") String name){
         Long saveId = studentService.save(name);
         log.info("save success");
@@ -20,7 +21,7 @@ public class StudentManagement_Controller {
         return saveId;
     }
 
-    @PutMapping("/api/v1/student/update")
+    @PutMapping
     public Long update(@RequestBody StudentRequestUpdateDto requestUpdateDto){
         studentService.update(requestUpdateDto);
         log.info("update success");
@@ -28,7 +29,7 @@ public class StudentManagement_Controller {
         return requestUpdateDto.getId();
     }
 
-    @DeleteMapping("/api/v1/student/delete/{student_id}")
+    @DeleteMapping(path = "{student_id}")
     public void delete(@PathVariable("student_id") Long student_id){
         studentService.delete(student_id);
 
