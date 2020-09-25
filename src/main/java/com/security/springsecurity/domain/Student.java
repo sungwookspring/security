@@ -21,4 +21,12 @@ public class Student {
         this.id = id;
         this.name = name;
     }
+
+    /***
+     * 이름 변경
+     * @param name
+     */
+    public void update(String name) {
+        this.name = name;
+    }
 }
