@@ -5,6 +5,7 @@ import com.security.springsecurity.domain.Dto.StudentRequestUpdateDto;
 import com.security.springsecurity.domain.Dto.StudentResponseAllDto;
 import com.security.springsecurity.domain.Student;
 import com.security.springsecurity.repository.StudentRepository;
+import com.security.springsecurity.security.ApplicationUserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.security.springsecurity.security.ApplicationUserRole.*;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +42,7 @@ public class StudentService {
                 .username(requestAddDto.getUsername())
                 .email(requestAddDto.getEmail())
                 .password(passwordEncoder.encode(requestAddDto.getPassword()))
+                .role(STUDENT.name())
                 .build();
 
         return studentRepository.save(newStudent).getId();

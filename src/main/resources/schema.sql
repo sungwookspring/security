@@ -5,5 +5,6 @@ CREATE TABLE student (
     username VARCHAR(128) NOT NULL,
     password VARCHAR(128),
     email VARCHAR(128),
+    role VARCHAR(128),
     PRIMARY KEY (student_id)
 );

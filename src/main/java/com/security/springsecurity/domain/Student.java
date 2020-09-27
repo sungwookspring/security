@@ -20,12 +20,15 @@ public class Student {
 
     private String password;
 
+    private String role;
+
     @Builder
-    public Student(Long id, String username, String email, String password) {
+    public Student(Long id, String username, String email, String password, String role) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     /***
