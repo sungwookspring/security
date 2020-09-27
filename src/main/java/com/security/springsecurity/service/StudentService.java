@@ -1,10 +1,12 @@
 package com.security.springsecurity.service;
 
+import com.security.springsecurity.domain.Dto.StudentRequestAddDto;
 import com.security.springsecurity.domain.Dto.StudentRequestUpdateDto;
 import com.security.springsecurity.domain.Dto.StudentResponseAllDto;
 import com.security.springsecurity.domain.Student;
 import com.security.springsecurity.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class StudentService {
     private final StudentRepository studentRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public Long save(Student student){
@@ -25,9 +28,20 @@ public class StudentService {
     @Transactional
     public Long save(String name){
         Student new_stuent = Student.builder()
-                .name(name)
+                .username(name)
                 .build();
         return studentRepository.save(new_stuent).getId();
+    }
+
+    @Transactional
+    public Long save(StudentRequestAddDto requestAddDto) {
+        Student newStudent = Student.builder()
+                .username(requestAddDto.getUsername())
+                .email(requestAddDto.getEmail())
+                .password(passwordEncoder.encode(requestAddDto.getPassword()))
+                .build();
+
+        return studentRepository.save(newStudent).getId();
     }
 
     /***
@@ -39,7 +53,7 @@ public class StudentService {
 
         List<StudentResponseAllDto> dtos = students.stream()
                 .map(student -> StudentResponseAllDto.builder()
-                        .name(student.getName())
+                        .name(student.getUsername())
                         .build())
                 .collect(Collectors.toList());
 
@@ -53,7 +67,7 @@ public class StudentService {
                 );
 
         return StudentResponseAllDto.builder()
-                .name(findStudent.getName())
+                .name(findStudent.getUsername())
                 .build();
     }
 

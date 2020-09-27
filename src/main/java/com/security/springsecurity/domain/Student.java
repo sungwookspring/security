@@ -14,19 +14,25 @@ public class Student {
     @Column(name = "student_id")
     private Long id;
 
-    private String name;
+    private String username;
+
+    private String email;
+
+    private String password;
 
     @Builder
-    public Student(Long id, String name) {
+    public Student(Long id, String username, String email, String password) {
         this.id = id;
-        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.password = password;
     }
 
     /***
      * 이름 변경
-     * @param name
+     * @param username
      */
-    public void update(String name) {
-        this.name = name;
+    public void update(String username) {
+        this.username = username;
     }
 }
