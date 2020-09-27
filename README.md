@@ -85,6 +85,11 @@ public class StudentManagement_Controller {
 
 ```
 
+# 회원가입: 비밀번호 암호화
+![](./imgs/회원가입_요청.png)
+
+![](./imgs/회원가입_결과.png)
+
 # 참고자료
 * [1] data.sql, schema.sql: https://www.baeldung.com/spring-boot-data-sql-and-schema-sql
 * [2] 강의영상: https://www.youtube.com/watch?v=her_7pa0vrg
