@@ -40,6 +40,51 @@ protected void configure(HttpSecurity http) throws Exception {
 }
 ```
 
+# Controller 메소드에 인가 설정
+* WebConfiguration 함수에 Global설정 
+```java
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
+    ...
+}
+```
+
+<br>
+
+* Controller 각 함수에 PreAuthorized 어노테이션 설정
+```java
+public class StudentManagement_Controller {
+    private final StudentService studentService;
+
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMINE', 'ROLE_MANAGER')")
+    public List<StudentResponseAllDto> listAll(){
+        ...
+    }
+
+    @PostMapping(path = "{name}")
+    @PreAuthorize("hasAuthority('student:write')")
+    public Long save(@PathVariable("name") String name){
+        ...
+    }
+
+    @PutMapping
+    @PreAuthorize("hasAuthority('student:write')")
+    public Long update(@RequestBody StudentRequestUpdateDto requestUpdateDto){
+        ...
+    }
+
+    @DeleteMapping(path = "{student_id}")
+    @PreAuthorize("hasAuthority('student:write')")
+    public void delete(@PathVariable("student_id") Long student_id){
+        ...
+    }
+}
+
+```
+
 # 참고자료
 * [1] data.sql, schema.sql: https://www.baeldung.com/spring-boot-data-sql-and-schema-sql
 * [2] 강의영상: https://www.youtube.com/watch?v=her_7pa0vrg
