@@ -28,46 +28,49 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .authorizeRequests()
-                    .antMatchers("/", "/index", "/css/*", "/js/*").permitAll()
-                    .antMatchers("/api/**").hasRole(STUDENT.name())
-                .anyRequest().permitAll()
+                 .authorizeRequests()
+                    .anyRequest().permitAll()
                 .and()
-                .formLogin();
+                    .formLogin()
+                        .loginPage("/student/login")
+                        .loginProcessingUrl("/login")
+                        .usernameParameter("email")
+                        .defaultSuccessUrl("/")
+                    .permitAll();
     }
 
-    @Override
-    @Bean
-    protected UserDetailsService userDetailsService() {
-        UserDetails testuser1 = User.builder()
-                .username("test1")
-                .password(passwordEncoder.encode("password"))
-                .authorities(STUDENT.getGrantedAuthorities())
-                .build();
-
-        UserDetails testuser2 = User.builder()
-                .username("test2")
-                .password(passwordEncoder.encode("password"))
-                .authorities(STUDENT.getGrantedAuthorities())
-                .build();
-
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(passwordEncoder.encode("password"))
-                .authorities(ADMIN.getGrantedAuthorities())
-                .build();
-
-        UserDetails manager = User.builder()
-                .username("manager")
-                .password(passwordEncoder.encode("password"))
-                .authorities(MANAGER.getGrantedAuthorities())
-                .build();
-
-        return new InMemoryUserDetailsManager(
-                testuser1,
-                testuser2,
-                admin,
-                manager
-        );
-    }
+//    @Override
+//    @Bean
+//    protected UserDetailsService userDetailsService() {
+//        UserDetails testuser1 = User.builder()
+//                .username("test1")
+//                .password(passwordEncoder.encode("password"))
+//                .authorities(STUDENT.getGrantedAuthorities())
+//                .build();
+//
+//        UserDetails testuser2 = User.builder()
+//                .username("test2")
+//                .password(passwordEncoder.encode("password"))
+//                .authorities(STUDENT.getGrantedAuthorities())
+//                .build();
+//
+//        UserDetails admin = User.builder()
+//                .username("admin")
+//                .password(passwordEncoder.encode("password"))
+//                .authorities(ADMIN.getGrantedAuthorities())
+//                .build();
+//
+//        UserDetails manager = User.builder()
+//                .username("manager")
+//                .password(passwordEncoder.encode("password"))
+//                .authorities(MANAGER.getGrantedAuthorities())
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(
+//                testuser1,
+//                testuser2,
+//                admin,
+//                manager
+//        );
+//    }
 }

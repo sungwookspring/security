@@ -6,7 +6,12 @@ import com.security.springsecurity.domain.Dto.StudentResponseAllDto;
 import com.security.springsecurity.domain.Student;
 import com.security.springsecurity.repository.StudentRepository;
 import com.security.springsecurity.security.ApplicationUserRole;
+import com.security.springsecurity.security.StudentUserDetails;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +24,8 @@ import static com.security.springsecurity.security.ApplicationUserRole.*;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class StudentService {
+@Slf4j
+public class StudentService implements UserDetailsService{
     private final StudentRepository studentRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -93,5 +99,17 @@ public class StudentService {
                 );
 
         findStudent.update(requestUpdateDto.getName());
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Student findStudent = studentRepository.findByEmail(email)
+                .orElseThrow(
+                        () -> new UsernameNotFoundException("존재하지 않은 student_id")
+                );
+
+        return StudentUserDetails.builder()
+                .student(findStudent)
+                .build();
     }
 }

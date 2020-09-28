@@ -27,4 +27,9 @@ public class StudentController {
         studentService.save(requestAddDto);
         return "redirect:/student/join";
     }
+
+    @GetMapping("/student/login")
+    public String loginForm(){
+        return "login";
+    }
 }
